@@ -2,14 +2,15 @@
 
 棉卫士是一个面向棉花病虫害巡检的可复现目标检测项目，目标是在普通RGB图片、视频和本地摄像头上检测棉花病害与虫害相关目标，并将模型部署为本地网页服务。
 
-当前仓库先完成可复现工程和 YOLOv8n 基线。数据审计已发现原划分之间有完全重复图片，项目在训练前提供非破坏性的去重清单生成。数据清理以后才训练正式基线；光照鲁棒训练、蒸馏和边缘部署均按单独对照实验推进。
+仓库已实现数据审计、视觉近重复分组、训练/验证、困难条件压力集、速度测量、ONNX 一致性检查和本地图片/视频推理。当前正推进 YOLOv8n/YOLO11n 的分组数据基线；鲁棒训练、蒸馏和边缘设备实测按后续独立实验推进。
 
 **状态**
 
-- [x] 建立数据审计、精确去重和训练/评估命令
-- [x] 初始化本地图片检测网页和接口
-- [ ] 对精确去重并人工复核后的数据训练 YOLOv8n/YOLO11n 基线
-- [ ] 完成光照、遮挡和尺度分组评价
+- [x] 数据审计、SHA-256 去重、旋转/翻转 pHash 分组和可复算清单
+- [x] 图片上传网页、视频推理、JSON/CSV 导出和相机入口
+- [x] 合成困难集、端到端计时和 ONNX 原始输出一致性工具
+- [ ] 完成 YOLOv8n/YOLO11n 分组数据基线与比较报告
+- [ ] 完成真实田间光照、遮挡和尺度分组评价
 - [ ] 完成单因素消融与小模型优化
 - [ ] 完成目标边缘设备的 ONNX/TensorRT 实测
 
@@ -55,30 +56,40 @@ Prepare local manifests from your own dataset path:
 ```bash
 cotton-doctor audit /path/to/dataset --output data/processed/audit
 cotton-doctor prepare /path/to/dataset --output data/splits/exact
+cotton-doctor prepare-grouped /path/to/dataset --output data/splits/grouped-v2
 ```
 
-The prepare command writes a local `data.yaml`, absolute image-list manifests, an audit report, and an excluded-copy list. Generated data and reports are ignored by Git. The split policy keeps one copy per SHA-256 and preserves `test > valid > train`; inspect `data/splits/exact/split-report.json` and `data/processed/audit/image-manifest.csv` before training.
+The exact-only split is a diagnostic intermediate. Grouped-v2 co-locates pHash candidates, including rotation/reflection matches, then creates new seeded class-balanced splits: **3,801 train / 1,085 validation / 544 test**, covering 2,828 visual candidate groups. It does not delete visually similar images. The [versioned summary](reports/grouped-v2-summary.json) and [relative-path, hash-only manifest](reports/grouped-v2-manifest.csv) are public; source images, annotations and local absolute-path manifests are excluded. Review crops, plant/session grouping and agricultural label semantics before claiming field generalization.
 
 ## Train and evaluate
 
 Use the generated manifest as the local config:
 
 ```bash
-cp data/splits/exact/data.yaml configs/data.local.yaml
-cotton-doctor train --data configs/data.local.yaml --model yolov8n.pt --epochs 120 --imgsz 640 --batch 8 --device 0 --name E0_yolov8n_seed42
+cp data/splits/grouped-v2/data.yaml configs/data.local.yaml
+cotton-doctor train --data configs/data.local.yaml --model yolov8n.pt --epochs 120 --imgsz 640 --batch 8 --device 0 --name E0_grouped_yolov8n_seed42
 ```
 
 After reviewing validation metrics and errors:
 
 ```bash
-cotton-doctor evaluate runs/E0_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split val --imgsz 640 --batch 1
+cotton-doctor evaluate runs/E0_grouped_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split val --imgsz 640 --batch 1
 ```
 
 Only after model, confidence threshold, and deployment configuration have been frozen, evaluate the held-out test set explicitly:
 
 ```bash
-cotton-doctor evaluate runs/E0_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split test --allow-test
+cotton-doctor evaluate runs/E0_grouped_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split test --allow-test
 ```
+
+Run both baselines, synthetic validation stress checks, CPU/GPU timing and ONNX checks sequentially:
+
+```bash
+python scripts/run_baseline_suite.py --plan
+python scripts/run_baseline_suite.py
+```
+
+Progress is saved in `runs/baseline-suite/state.json`. The suite selects a baseline by validation mAP50–95 and writes `reports/baseline-comparison.{json,md}` when complete; it never evaluates the final test set. Optional `--publish-reports` commits and pushes only these two aggregate reports. If a separate training job is active, use `--wait-pid <training-pid>` to wait for it.
 
 ## Local web demo
 
@@ -86,11 +97,22 @@ Copy the chosen model to `weights/best.pt` or set `COTTON_MODEL` to its path:
 
 ```bash
 mkdir -p weights
-cp runs/E0_yolov8n_seed42/weights/best.pt weights/best.pt
+cp runs/E0_grouped_yolov8n_seed42/weights/best.pt weights/best.pt
 uvicorn cotton_doctor.web:app --host 127.0.0.1 --port 8000
 ```
 
-Open `http://127.0.0.1:8000`. The service binds to loopback by default; no cloud account or WeChat mini program is required. It accepts single-image uploads and returns the annotated image and box coordinates. Video, USB camera, ONNX, and edge-engine paths are planned next.
+Open `http://127.0.0.1:8000`. The service binds to loopback and uses CPU by default; set `COTTON_DEVICE=0` for GPU. It accepts uploads or browser camera captures and returns annotated images and box coordinates, with JSON/CSV/image downloads. Actual image and four-frame video inference passed integration checks. Physical USB camera and target edge hardware still need testing.
+
+```bash
+cotton-doctor predict weights/best.pt --source /path/to/cotton.mp4 --output runs/predict/video
+cotton-doctor predict weights/best.pt --source 0 --max-frames 300 --output runs/predict/camera
+cotton-doctor make-stress --data data/splits/grouped-v2/data.yaml
+cotton-doctor benchmark weights/best.pt --manifest data/splits/grouped-v2/valid.txt --device 0
+cotton-doctor export weights/best.pt
+cotton-doctor verify-export weights/best.pt weights/best.onnx
+```
+
+Install ONNX dependencies with `python -m pip install -e '.[export]'`. Synthetic `scale_050` measures resolution loss, not geometric object-size change; occlusion stress retains the original full-object labels. Interpret these separately from real field difficulty groups.
 
 ## Evaluation protocol
 
@@ -104,10 +126,12 @@ The supplied labels mix affected-leaf boxes, insect boxes, and plant-level scene
 
 ```bash
 pytest
-ruff check cotton_doctor tests
+ruff check cotton_doctor tests scripts
 ```
 
-Chinese starting steps are in [docs/上手指南.md](docs/上手指南.md). See [the implementation roadmap](docs/roadmap.md), [the staged learning path](docs/learning-path.md), and [recent paper notes](docs/references.md).
+Chinese starting steps are in [docs/上手指南.md](docs/上手指南.md). See [the complete project and knowledge plan](docs/project-plan.md), [the implementation roadmap](docs/roadmap.md), [the staged learning path](docs/learning-path.md), and [recent paper notes](docs/references.md). [Integration evidence](reports/integration-checks.json) covers software checks on a provisional model, not final accuracy.
+
+The corn-doctor project inspired the training → web → export → camera workflow. Its main pipeline classifies whole images; this repository implements its own eight-class box detector and application. Its scores and weights are not this project's results.
 
 ## License and attribution
 

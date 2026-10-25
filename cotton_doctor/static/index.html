@@ -21,6 +21,9 @@
       <div class="toolbar">
         <label class="upload-button" for="file-input"><span aria-hidden="true">↑</span>选择图片</label>
         <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp">
+        <button id="camera-start" class="tool-link" type="button">开启相机</button>
+        <button id="camera-capture" class="tool-link" type="button" hidden>拍照检测</button>
+        <button id="camera-stop" class="tool-link" type="button" hidden>关闭相机</button>
         <a id="download-image" class="tool-link" hidden download="cotton-detection.jpg" title="下载标框图片" aria-label="下载标框图片">↓ 图片</a>
         <button id="download-json" class="tool-link" type="button" hidden title="下载JSON结果">JSON</button>
         <button id="download-csv" class="tool-link" type="button" hidden title="下载CSV结果">CSV</button>
@@ -31,6 +34,7 @@
         <section class="preview-panel" aria-label="检测预览">
           <div id="empty-state" class="empty-state"><span class="scan-icon" aria-hidden="true">⌗</span><p>选择棉花图片开始检测</p></div>
           <img id="result-image" alt="棉花病虫害检测结果" hidden>
+          <video id="camera-preview" autoplay playsinline muted hidden aria-label="相机预览"></video>
           <div id="busy" class="busy" hidden><span></span>正在检测</div>
         </section>
         <aside class="results-panel">

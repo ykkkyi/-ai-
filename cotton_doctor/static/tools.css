@@ -1,1 +1,2 @@
 .tool-link{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 8px;border:1px solid #dce4de;border-radius:4px;background:#fff;color:#386448;font:inherit;font-size:11px;text-decoration:none;cursor:pointer}.tool-link:hover{background:#eaf4ed;border-color:#b6cebd}.tool-link[hidden]{display:none}.file-hint{margin-right:auto}
+#camera-preview{max-width:100%;max-height:510px;object-fit:contain}.toolbar{height:auto;min-height:54px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:9px}

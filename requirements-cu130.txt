@@ -2,4 +2,5 @@
 --extra-index-url https://download.pytorch.org/whl/cu130
 torch==2.14.0
 torchvision==0.29.0
--e .[dev]
+ultralytics==8.4.189
+-e .[dev,export]

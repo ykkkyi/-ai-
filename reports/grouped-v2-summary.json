@@ -1,0 +1,109 @@
+{
+  "schema_version": 2,
+  "seed": 42,
+  "target_fractions": [
+    0.7,
+    0.2,
+    0.1
+  ],
+  "names_as_provided": [
+    "leaf spot",
+    "Aphids",
+    "Armyworm",
+    "Bacterial Blight",
+    "Fusarium Wilt",
+    "Grey milddew",
+    "Healthy",
+    "Leaf Curl"
+  ],
+  "original_images": 6097,
+  "unique_sha256_images": 5430,
+  "visual_candidate_groups": 2828,
+  "multi_image_groups": 494,
+  "largest_group": 43,
+  "candidate_pairs": 10577,
+  "pairs_crossing_previous_splits": 4793,
+  "phash_distance": 6,
+  "transforms": "four 90-degree rotations and reflection",
+  "split_manifest_sha256": "7308fc4d4c7290e82fe334bc715bd7408899baaad16c3af8a9e2ab518a1b2d04",
+  "cross_split_candidate_groups": 0,
+  "splits": {
+    "train": {
+      "images": 3801,
+      "boxes": 6400,
+      "groups": 1980,
+      "class_box_counts": {
+        "0": 1092,
+        "1": 582,
+        "2": 571,
+        "3": 865,
+        "4": 628,
+        "5": 176,
+        "6": 2211,
+        "7": 275
+      },
+      "class_image_counts": {
+        "0": 574,
+        "1": 544,
+        "2": 483,
+        "3": 775,
+        "4": 342,
+        "5": 158,
+        "6": 866,
+        "7": 207
+      }
+    },
+    "valid": {
+      "images": 1085,
+      "boxes": 1939,
+      "groups": 562,
+      "class_box_counts": {
+        "0": 311,
+        "1": 177,
+        "2": 154,
+        "3": 271,
+        "4": 197,
+        "5": 45,
+        "6": 685,
+        "7": 99
+      },
+      "class_image_counts": {
+        "0": 164,
+        "1": 156,
+        "2": 138,
+        "3": 221,
+        "4": 97,
+        "5": 45,
+        "6": 247,
+        "7": 59
+      }
+    },
+    "test": {
+      "images": 544,
+      "boxes": 842,
+      "groups": 286,
+      "class_box_counts": {
+        "0": 144,
+        "1": 86,
+        "2": 77,
+        "3": 114,
+        "4": 88,
+        "5": 23,
+        "6": 274,
+        "7": 36
+      },
+      "class_image_counts": {
+        "0": 82,
+        "1": 78,
+        "2": 69,
+        "3": 110,
+        "4": 48,
+        "5": 22,
+        "6": 123,
+        "7": 29
+      }
+    }
+  },
+  "policy": "One copy per SHA-256; union DCT pHash candidates; assign whole connected components to new seeded, class-balanced train/valid/test splits.",
+  "limitation": "Perceptual candidates are conservatively co-located, not deleted. pHash can miss crops, perspective changes and same-plant photos. This is not proof of plant/session independence or field generalization. The original split is replaced; restart models from pretrained weights."
+}

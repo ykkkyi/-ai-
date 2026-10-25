@@ -22,6 +22,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.9,<1"]
+export = ["onnx>=1.16,<2", "onnxruntime>=1.19,<2", "onnxscript>=0.4,<1"]
 
 [project.scripts]
 cotton-doctor = "cotton_doctor.cli:main"

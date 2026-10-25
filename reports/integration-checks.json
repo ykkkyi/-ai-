@@ -1,0 +1,42 @@
+{
+  "purpose": "integration smoke only; provisional model",
+  "web_http_status": 200,
+  "decoded_annotated_image": true,
+  "video_frames": 4,
+  "camera_hardware_tested": false,
+  "export_agreement": {
+    "status": "passed",
+    "images": 2,
+    "imgsz": 640,
+    "precision": "FP32",
+    "atol": 0.001,
+    "rtol": 0.001,
+    "max_absolute_error": 0.00048828125,
+    "weight_sha256": "2a14a2b05ee5d9a58b9858e69d3a290eb8c55e07e4854905347bdc361adbe385",
+    "onnx_sha256": "99cc6a614d6757d05f5f78a320da34db1540a317ff57d9a585d5a7f17314daa7",
+    "output": "raw boxes and class scores before NMS",
+    "onnxruntime": "1.31.0"
+  },
+  "scope": "Software integration checks on a provisional model; not final detection or deployment performance",
+  "full_baseline_suite_smoke": {
+    "status": "passed",
+    "models": [
+      "yolov8n",
+      "yolo11n"
+    ],
+    "epochs_per_model": 1,
+    "data": "independent synthetic fixture, not cotton evaluation",
+    "checks": [
+      "training",
+      "validation/per-class/F1 summaries",
+      "CPU latency",
+      "six synthetic stress variants",
+      "validation-only selection",
+      "FP32 ONNX export",
+      "raw output agreement",
+      "aggregate JSON/Markdown reports"
+    ],
+    "final_test_evaluated": false,
+    "report_publishing_tested": false
+  }
+}

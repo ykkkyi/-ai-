@@ -15,34 +15,9 @@ import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from ultralytics import YOLO
+from starlette.concurrency import run_in_threadpool
 
-
-class LocalPredictor:
-    def __init__(self, model_path: str, conf: float = 0.25, iou: float = 0.45):
-        self.model = YOLO(model_path)
-        self.conf = conf
-        self.iou = iou
-        self.lock = threading.Lock()
-
-    def __call__(self, image: np.ndarray) -> tuple[dict, bytes]:
-        with self.lock:
-            result = self.model.predict(image, conf=self.conf, iou=self.iou, verbose=False)[0]
-        detections = []
-        if result.boxes is not None:
-            boxes = result.boxes.cpu()
-            for xyxy, confidence, class_id in zip(boxes.xyxy.tolist(), boxes.conf.tolist(), boxes.cls.tolist()):
-                index = int(class_id)
-                detections.append({
-                    "class_id": index, "class_name": self.model.names[index],
-                    "confidence": round(float(confidence), 5),
-                    "xyxy": [round(float(value), 2) for value in xyxy],
-                })
-        rendered = result.plot()
-        ok, buffer = cv2.imencode(".jpg", rendered, [cv2.IMWRITE_JPEG_QUALITY, 90])
-        if not ok:
-            raise RuntimeError("Failed to encode annotated image")
-        return {"detections": detections, "inference_ms": round(float(result.speed["inference"]), 3)}, buffer.tobytes()
+from .inference import LocalPredictor
 
 
 def create_app(predictor=None, *, max_upload_mb: int = 12, result_cache_size: int = 8) -> FastAPI:
@@ -56,12 +31,14 @@ def create_app(predictor=None, *, max_upload_mb: int = 12, result_cache_size: in
             app.state.predictor = LocalPredictor(
                 model_path, float(os.environ.get("COTTON_CONF", "0.25")),
                 float(os.environ.get("COTTON_IOU", "0.45")),
+                os.environ.get("COTTON_DEVICE", "cpu"),
             )
         yield
 
     app = FastAPI(title="棉卫士 Cotton Doctor", version="0.1.0", lifespan=lifespan)
     app.state.predictor = predictor
     app.state.result_cache = OrderedDict()
+    app.state.cache_lock = threading.Lock()
     app.state.max_upload_bytes = max_upload_mb * 1024 * 1024
     app.state.result_cache_size = result_cache_size
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
@@ -85,21 +62,23 @@ def create_app(predictor=None, *, max_upload_mb: int = 12, result_cache_size: in
         if image is None:
             raise HTTPException(status_code=400, detail="The uploaded file is not a readable image.")
         try:
-            response, rendered = app.state.predictor(image)
+            response, rendered = await run_in_threadpool(app.state.predictor, image)
         except Exception as error:
             raise HTTPException(status_code=500, detail="Detection failed.") from error
         result_id = uuid.uuid4().hex
-        app.state.result_cache[result_id] = rendered
-        while len(app.state.result_cache) > app.state.result_cache_size:
-            app.state.result_cache.popitem(last=False)
+        with app.state.cache_lock:
+            app.state.result_cache[result_id] = rendered
+            while len(app.state.result_cache) > app.state.result_cache_size:
+                app.state.result_cache.popitem(last=False)
         return {"result_id": result_id, **response}
 
     @app.get("/api/results/{result_id}.jpg")
     def result_image(result_id: str):
-        content = app.state.result_cache.get(result_id)
-        if content is None:
-            raise HTTPException(status_code=404, detail="Result expired or not found.")
-        app.state.result_cache.move_to_end(result_id)
+        with app.state.cache_lock:
+            content = app.state.result_cache.get(result_id)
+            if content is None:
+                raise HTTPException(status_code=404, detail="Result expired or not found.")
+            app.state.result_cache.move_to_end(result_id)
         from fastapi.responses import Response
 
         return Response(content=content, media_type="image/jpeg")
@@ -107,4 +86,4 @@ def create_app(predictor=None, *, max_upload_mb: int = 12, result_cache_size: in
     return app
 
 
-app = create_app()
+app = create_app(max_upload_mb=int(os.environ.get("COTTON_MAX_UPLOAD_MB", "12")))

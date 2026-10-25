@@ -32,7 +32,7 @@ mixup: 0.0
 copy_paste: 0.0
 cache: false
 project: runs
-name: E0_yolov8n_seed42
+name: E0_grouped_yolov8n_seed42
 exist_ok: false
 save: true
 val: true

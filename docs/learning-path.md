@@ -5,7 +5,7 @@ Learn each topic just before the project needs it. The goal is to be able to run
 | Stage | Knowledge | Practical pass condition |
 |---|---|---|
 | Python and environment | Python functions/data structures/files, virtual environments, Git, WSL paths | Read one image, call a pretrained detector, save the rendered result |
-| Data | YOLO normalized boxes, class IDs, train/val/test, leakage, class imbalance, image display | Explain every class's annotation unit and visualize labels; exact hashes do not cross splits |
+| Data | YOLO normalized boxes, class IDs, train/val/test, leakage, class imbalance, DCT pHash and connected components | Explain every class's annotation unit; exact duplicates and visual candidate groups do not cross splits |
 | Detection training | PyTorch tensors, gradients, optimizer, epoch/batch/LR, CNN/feature maps, YOLO backbone/neck/head | Run a short smoke training, interpret loss/validation curves, reload best weights |
 | Evaluation | IoU, TP/FP/FN, precision, recall, F1, AP/mAP, confidence/NMS | Report per-class metrics and select thresholds on validation data only |
 | Robustness methods | OpenCV/NumPy augmentation, paired views, feature masks, loss weighting | Show a controlled ablation on real lighting/occlusion subsets |
