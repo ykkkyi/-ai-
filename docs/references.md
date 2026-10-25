@@ -1,0 +1,15 @@
+# Recent literature notes
+
+Search date: 2026-10-25. The papers below were checked through Crossref, Europe PMC, and/or publisher full text. Their scores belong to their own datasets, label definitions, and hardware; do not compare them as if they shared one benchmark. The project's own accuracy and speed require local experiments.
+
+| Paper | Why it is relevant | Caution |
+|---|---|---|
+| Feng et al. (2025), [LCDDN-YOLO](https://doi.org/10.3390/agriculture15040421), *Agriculture* 15(4), 421 | Cotton pest/disease detector based on YOLOv8n with DSConv, BiFPN, PDS-C2f, CBAM, and Focal-EIoU. Its table reports lower parameter count and mAP50 rising 78.9% to 85.4%, while FPS falls 169 to 161. | Its taxonomy/data differ. The FPS is not a Jetson result. It demonstrates why a smaller model must be timed on target hardware. |
+| Abudukelimu et al. (2025), [CM-YOLO](https://doi.org/10.1038/s41598-025-24898-5), *Scientific Reports* | Cotton small-lesion detector using SS2D, MSDA, and DIoU. Table 1 reports YOLO11n ahead of CM-YOLO in mAP50-95 while smaller and faster. | Do not add P2 or a Mamba block just because another paper focuses on small lesions. The supplied dataset has few COCO-small boxes. |
+| Ye et al. (2026), [YOLO-SCOD](https://doi.org/10.3389/fpls.2026.1822081), *Frontiers in Plant Science* | Cotton Verticillium wilt detector; uses lighting, noise, and local-occlusion augmentation. Reports its own YOLOv12n comparison. | It notes missing grouped tests for lighting/occlusion and no field deployment. Keep these as explicit evaluations in this project. |
+| Feng et al. (2025), [YOLO-Citrus](https://doi.org/10.3389/fpls.2025.1668036), *Frontiers in Plant Science* | Includes a Jetson Orin Nano, TensorRT FP16, camera, and display workflow. | Citrus results do not transfer to cotton. Reproduce full end-to-end latency instead of quoting its FPS. |
+| Mu et al. (2026), [RGC-YOLO](https://doi.org/10.3389/fpls.2026.1911031), *Frontiers in Plant Science* | Cotton-field weed detector with detailed Jetson AGX Orin/TensorRT precision-format benchmarking. FP16-to-INT8 reduced the paper's mAP50-95 by 7.12 percentage points. | Weed detection is not disease detection. INT8 can cost substantial accuracy. |
+| Huang et al. (2026), [IRMKD](https://doi.org/10.3389/fbinf.2026.1761574), *Frontiers in Bioinformatics* | Agricultural plant disease teacher-student knowledge distillation. | It is classification rather than detection. Foreground-balanced box distillation needs new implementation and ablation here. |
+| Cao et al. (2026), [anisotropic boundary-aware cotton detection](https://doi.org/10.3389/fpls.2026.1848014), *Frontiers in Plant Science* | Discusses boundary preservation, reparameterization, and Jetson FP16/INT8 measurements for cotton leaf lesions. | Different label geometry and six-class field dataset. Add a boundary branch only if error analysis justifies it. |
+
+The local research folder has the full-text artifacts and cross-check records used to prepare these notes. No paper score is claimed as a result of this repository.

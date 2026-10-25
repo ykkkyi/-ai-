@@ -1,0 +1,1 @@
+Record each run in `results-template.csv` or a versioned JSON file. Do not report unmeasured values. Keep validation experiments separate from the single frozen final test evaluation. Every result should identify its data manifest, model/weight, code commit, software versions, hardware, input size, confidence/NMS policy, and timing boundaries.

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>棉卫士 | 棉花病虫害检测</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/tools.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="棉卫士首页"><span class="brand-mark">棉</span><span>棉卫士</span></a>
+    <span class="status"><span class="status-dot"></span>本地推理</span>
+  </header>
+  <main>
+    <section class="workspace" aria-labelledby="title">
+      <div class="heading">
+        <div><p class="eyebrow">COTTON FIELD INSPECTION</p><h1 id="title">病虫害检测</h1></div>
+        <span id="health" class="health">连接检测中</span>
+      </div>
+      <div class="toolbar">
+        <label class="upload-button" for="file-input"><span aria-hidden="true">↑</span>选择图片</label>
+        <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp">
+        <a id="download-image" class="tool-link" hidden download="cotton-detection.jpg" title="下载标框图片" aria-label="下载标框图片">↓ 图片</a>
+        <button id="download-json" class="tool-link" type="button" hidden title="下载JSON结果">JSON</button>
+        <button id="download-csv" class="tool-link" type="button" hidden title="下载CSV结果">CSV</button>
+        <span class="file-hint">JPG、PNG、WebP · 最大 12 MB</span>
+        <button id="clear-button" class="icon-button" type="button" title="清除结果" aria-label="清除结果">×</button>
+      </div>
+      <div class="content">
+        <section class="preview-panel" aria-label="检测预览">
+          <div id="empty-state" class="empty-state"><span class="scan-icon" aria-hidden="true">⌗</span><p>选择棉花图片开始检测</p></div>
+          <img id="result-image" alt="棉花病虫害检测结果" hidden>
+          <div id="busy" class="busy" hidden><span></span>正在检测</div>
+        </section>
+        <aside class="results-panel">
+          <div class="results-header"><h2>检测结果</h2><span id="count" class="count">0</span></div>
+          <div id="summary" class="summary">等待图片</div>
+          <ul id="detections" class="detections"></ul>
+          <div id="timing" class="timing" hidden><span>模型推理</span><strong></strong></div>
+          <p id="error" class="error" role="alert" hidden></p>
+        </aside>
+      </div>
+      <footer><span>结果表示模型对图片的识别，不构成农技诊断</span><a href="https://github.com/ykkkyi/-ai-">项目代码</a></footer>
+    </section>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

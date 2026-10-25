@@ -1,0 +1,1 @@
+.tool-link{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 8px;border:1px solid #dce4de;border-radius:4px;background:#fff;color:#386448;font:inherit;font-size:11px;text-decoration:none;cursor:pointer}.tool-link:hover{background:#eaf4ed;border-color:#b6cebd}.tool-link[hidden]{display:none}.file-hint{margin-right:auto}

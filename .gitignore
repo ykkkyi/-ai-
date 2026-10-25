@@ -1,0 +1,31 @@
+# Local datasets, manifests and generated audit reports
+data/raw/
+data/processed/
+data/splits/
+configs/data.local.yaml
+
+# Training artifacts and exported models
+runs/
+weights/
+exports/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.onnx.data
+
+# Local environments, secrets, logs, caches
+.venv/
+build/
+dist/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+*.py[cod]
+*.log
+.DS_Store
+Thumbs.db
