@@ -94,6 +94,21 @@ The report records clean validation, all six synthetic stress subsets, CPU/GPU t
 the delta against the frozen YOLO11n baseline. A negative result is retained as evidence;
 an augmentation is not adopted solely because it improves one stress subset.
 
+For the rare Fusarium Wilt class (class ID 4), create a non-destructive balanced training
+manifest. It repeats only target-class training paths; validation and test paths are copied
+unchanged. The generated directory is local and ignored by Git:
+
+```bash
+cotton-doctor balance-train --data data/splits/grouped-v2/data.yaml \
+  --output data/splits/grouped-v2-balanced-fusarium --target-class 4 --factor 2.0
+cotton-doctor train --data data/splits/grouped-v2-balanced-fusarium/data.yaml \
+  --model yolo11n.pt --epochs 120 --imgsz 640 --batch 8 --device 0 --seed 42 \
+  --profile baseline --name E3_balanced_fusarium_yolo11n_seed42
+```
+
+This is an explicit class-balance ablation. Compare it against the frozen YOLO11n baseline
+on overall mAP, Fusarium Wilt AP/recall, every other class, stress subsets and latency.
+
 After reviewing validation metrics and errors:
 
 ```bash

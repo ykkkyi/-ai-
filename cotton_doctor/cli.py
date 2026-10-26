@@ -30,6 +30,13 @@ def build_parser() -> argparse.ArgumentParser:
     grouped.add_argument("--seed", type=int, default=42)
     grouped.add_argument("--workers", type=int, default=4)
 
+    balanced = subparsers.add_parser("balance-train", help="Create a deterministic class-balanced train manifest")
+    balanced.add_argument("--data", type=Path, default=Path("data/splits/grouped-v2/data.yaml"))
+    balanced.add_argument("--output", type=Path, default=Path("data/splits/grouped-v2-balanced-fusarium"))
+    balanced.add_argument("--target-class", type=int, default=4)
+    balanced.add_argument("--factor", type=float, default=2.0)
+    balanced.add_argument("--seed", type=int, default=42)
+
     train = subparsers.add_parser("train", help="Train a YOLO detection model")
     train.add_argument("--data", type=Path, default=Path("configs/data.local.yaml"))
     train.add_argument("--model", default="yolov8n.pt")
@@ -189,6 +196,13 @@ def _export(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "balance-train":
+        from .balance import make_balanced_train
+
+        print(json.dumps(make_balanced_train(args.data, args.output, target_class=args.target_class,
+                                              factor=args.factor, seed=args.seed),
+                         ensure_ascii=False, indent=2))
+        return 0
     if args.command in {"audit", "prepare", "prepare-grouped"}:
         audit = audit_dataset(args.dataset)
         if args.command == "audit":

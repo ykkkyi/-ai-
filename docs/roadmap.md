@@ -21,6 +21,10 @@ baseline profile; model, data split, optimizer, seed, input size and training bu
 fixed. The run is recorded separately as `E2_robust_yolo11n_seed42` and must be judged by
 both clean validation and the six synthetic stress subsets before being adopted.
 
+The next controlled ablation uses `balance-train` to repeat only images containing the rare
+Fusarium Wilt class. It keeps the validation/test manifests unchanged and reports the cost
+of the larger training epoch separately from deployment latency.
+
 ## Milestone 3: lightweight model and distillation
 
 Retain the high-resolution P3 path initially. Test selected P4/P5 depthwise-pointwise replacements only if device measurements support them. Compare no distillation, ordinary teacher-student distillation, and foreground/class-balanced distillation. The deployment graph must exclude the teacher and training-only adapters.
