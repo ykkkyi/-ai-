@@ -39,6 +39,8 @@ def build_parser() -> argparse.ArgumentParser:
     train.add_argument("--device", default="0")
     train.add_argument("--workers", type=int, default=4)
     train.add_argument("--seed", type=int, default=42)
+    train.add_argument("--profile", choices=("baseline", "robust"), default="baseline",
+                       help="Training augmentation profile; robust targets illumination and occlusion")
     train.add_argument("--name", default="E0_yolov8n_seed42")
     train.add_argument("--project", type=Path, default=Path("runs"))
     train.add_argument("--resume", type=Path, help="Resume this last.pt checkpoint with its saved settings")
@@ -96,6 +98,23 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _training_hyperparameters(profile: str) -> dict[str, float | int | bool]:
+    """Return the explicit augmentation knobs used by a reproducible experiment."""
+    if profile == "baseline":
+        return {
+            "degrees": 5.0, "translate": 0.1, "scale": 0.3, "fliplr": 0.5, "flipud": 0.0,
+            "hsv_h": 0.01, "hsv_s": 0.25, "hsv_v": 0.25, "mosaic": 0.5,
+            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0, "erasing": 0.0,
+        }
+    if profile == "robust":
+        return {
+            "degrees": 5.0, "translate": 0.1, "scale": 0.3, "fliplr": 0.5, "flipud": 0.0,
+            "hsv_h": 0.01, "hsv_s": 0.45, "hsv_v": 0.50, "mosaic": 0.5,
+            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0, "erasing": 0.25,
+        }
+    raise ValueError(f"Unknown training profile: {profile}")
+
+
 def _train(args: argparse.Namespace) -> int:
     from ultralytics import YOLO
 
@@ -104,13 +123,12 @@ def _train(args: argparse.Namespace) -> int:
         print(f"Resumed training completed: {result.save_dir}")
         return 0
     model = YOLO(args.model)
+    augmentation = _training_hyperparameters(args.profile)
     result = model.train(
         data=str(args.data), epochs=args.epochs, imgsz=args.imgsz, batch=args.batch,
         device=args.device, workers=args.workers, seed=args.seed, deterministic=True,
         optimizer="SGD", lr0=0.01, lrf=0.01, momentum=0.937, weight_decay=0.0005,
-        warmup_epochs=3.0, cos_lr=True, degrees=5.0, translate=0.1, scale=0.3,
-        fliplr=0.5, flipud=0.0, hsv_h=0.01, hsv_s=0.25, hsv_v=0.25,
-        mosaic=0.5, close_mosaic=10, mixup=0.0, copy_paste=0.0, cache=False,
+        warmup_epochs=3.0, cos_lr=True, cache=False, **augmentation,
         patience=25, pretrained=True, amp=True, project=str(args.project.resolve()), name=args.name,
         exist_ok=False, save=True, val=True, plots=True,
     )

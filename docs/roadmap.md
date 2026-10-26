@@ -15,6 +15,12 @@ The project advances one reproducible milestone at a time. No accuracy, latency,
 
 Label real illumination, occlusion, and scale conditions on a field holdout. First compare ordinary augmentation, agricultural lighting augmentation, lighting-paired consistency, and limited occlusion augmentation one change at a time. Keep generated stress images separate from the real-field results. Measure both missed detections and false positives.
 
+The first controlled ablation is implemented in the CLI as `--profile robust`. It changes
+only HSV saturation/value jitter and enables limited random erasing relative to the frozen
+baseline profile; model, data split, optimizer, seed, input size and training budget remain
+fixed. The run is recorded separately as `E2_robust_yolo11n_seed42` and must be judged by
+both clean validation and the six synthetic stress subsets before being adopted.
+
 ## Milestone 3: lightweight model and distillation
 
 Retain the high-resolution P3 path initially. Test selected P4/P5 depthwise-pointwise replacements only if device measurements support them. Compare no distillation, ordinary teacher-student distillation, and foreground/class-balanced distillation. The deployment graph must exclude the teacher and training-only adapters.

@@ -70,6 +70,20 @@ cp data/splits/grouped-v2/data.yaml configs/data.local.yaml
 cotton-doctor train --data configs/data.local.yaml --model yolov8n.pt --epochs 120 --imgsz 640 --batch 8 --device 0 --name E0_grouped_yolov8n_seed42
 ```
 
+The training entry point also has a controlled `robust` augmentation profile for the
+illumination/occlusion ablation. It keeps the baseline optimizer, image size, seed and
+geometry settings fixed, while increasing HSV brightness/saturation jitter and enabling
+limited random erasing:
+
+```bash
+cotton-doctor train --data data/splits/grouped-v2/data.yaml --model yolo11n.pt \
+  --epochs 120 --imgsz 640 --batch 8 --device 0 --seed 42 \
+  --profile robust --name E2_robust_yolo11n_seed42
+```
+
+The `robust` run is an ablation candidate, not the selected model until its validation,
+stress and deployment measurements are compared with `yolo11n` under the same protocol.
+
 After reviewing validation metrics and errors:
 
 ```bash
