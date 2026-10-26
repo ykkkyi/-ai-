@@ -1,0 +1,1153 @@
+{
+  "scope": "YOLO11n robust augmentation ablation on grouped-v2; final test remains held out",
+  "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+  "profile": {
+    "hsv_s": 0.45,
+    "hsv_v": 0.5,
+    "erasing": 0.25
+  },
+  "data": {
+    "schema_version": 2,
+    "seed": 42,
+    "target_fractions": [
+      0.7,
+      0.2,
+      0.1
+    ],
+    "names_as_provided": [
+      "leaf spot",
+      "Aphids",
+      "Armyworm",
+      "Bacterial Blight",
+      "Fusarium Wilt",
+      "Grey milddew",
+      "Healthy",
+      "Leaf Curl"
+    ],
+    "original_images": 6097,
+    "unique_sha256_images": 5430,
+    "visual_candidate_groups": 2828,
+    "multi_image_groups": 494,
+    "largest_group": 43,
+    "candidate_pairs": 10577,
+    "pairs_crossing_previous_splits": 4793,
+    "phash_distance": 6,
+    "transforms": "four 90-degree rotations and reflection",
+    "split_manifest_sha256": "7308fc4d4c7290e82fe334bc715bd7408899baaad16c3af8a9e2ab518a1b2d04",
+    "cross_split_candidate_groups": 0,
+    "splits": {
+      "train": {
+        "images": 3801,
+        "boxes": 6400,
+        "groups": 1980,
+        "class_box_counts": {
+          "0": 1092,
+          "1": 582,
+          "2": 571,
+          "3": 865,
+          "4": 628,
+          "5": 176,
+          "6": 2211,
+          "7": 275
+        },
+        "class_image_counts": {
+          "0": 574,
+          "1": 544,
+          "2": 483,
+          "3": 775,
+          "4": 342,
+          "5": 158,
+          "6": 866,
+          "7": 207
+        }
+      },
+      "valid": {
+        "images": 1085,
+        "boxes": 1939,
+        "groups": 562,
+        "class_box_counts": {
+          "0": 311,
+          "1": 177,
+          "2": 154,
+          "3": 271,
+          "4": 197,
+          "5": 45,
+          "6": 685,
+          "7": 99
+        },
+        "class_image_counts": {
+          "0": 164,
+          "1": 156,
+          "2": 138,
+          "3": 221,
+          "4": 97,
+          "5": 45,
+          "6": 247,
+          "7": 59
+        }
+      },
+      "test": {
+        "images": 544,
+        "boxes": 842,
+        "groups": 286,
+        "class_box_counts": {
+          "0": 144,
+          "1": 86,
+          "2": 77,
+          "3": 114,
+          "4": 88,
+          "5": 23,
+          "6": 274,
+          "7": 36
+        },
+        "class_image_counts": {
+          "0": 82,
+          "1": 78,
+          "2": 69,
+          "3": 110,
+          "4": 48,
+          "5": 22,
+          "6": 123,
+          "7": 29
+        }
+      }
+    },
+    "policy": "One copy per SHA-256; union DCT pHash candidates; assign whole connected components to new seeded, class-balanced train/valid/test splits.",
+    "limitation": "Perceptual candidates are conservatively co-located, not deleted. pHash can miss crops, perspective changes and same-plant photos. This is not proof of plant/session independence or field generalization. The original split is replaced; restart models from pretrained weights."
+  },
+  "validation": {
+    "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+    "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/splits/grouped-v2/data.yaml",
+    "split": "val",
+    "imgsz": 640,
+    "batch": 8,
+    "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+    "python": "3.14.4",
+    "torch": "2.14.0+cu130",
+    "ultralytics": "8.4.189",
+    "metrics": {
+      "metrics/precision(B)": 0.7317663805144432,
+      "metrics/recall(B)": 0.6197652274804055,
+      "metrics/mAP50(B)": 0.6677823870117162,
+      "metrics/mAP50-95(B)": 0.3580163344816206,
+      "fitness": 0.3580163344816206
+    },
+    "per_class": [
+      {
+        "class_id": 0,
+        "class_name": "leaf spot",
+        "precision": 0.6604520266712263,
+        "recall": 0.5003484485203459,
+        "f1": 0.5693590826839203,
+        "ap50": 0.5809238789301534,
+        "ap50_95": 0.2785491972125566
+      },
+      {
+        "class_id": 1,
+        "class_name": "Aphids",
+        "precision": 0.8988354459630363,
+        "recall": 0.8022598870056498,
+        "f1": 0.8478062449992654,
+        "ap50": 0.8627220161953378,
+        "ap50_95": 0.41719777100103705
+      },
+      {
+        "class_id": 2,
+        "class_name": "Armyworm",
+        "precision": 0.9228272815816259,
+        "recall": 0.8701298701298701,
+        "f1": 0.8957041521136455,
+        "ap50": 0.8951701582258917,
+        "ap50_95": 0.49862452552217185
+      },
+      {
+        "class_id": 3,
+        "class_name": "Bacterial Blight",
+        "precision": 0.7308620653875112,
+        "recall": 0.5645756457564576,
+        "f1": 0.6370463341856428,
+        "ap50": 0.6257222669375317,
+        "ap50_95": 0.3324128134874022
+      },
+      {
+        "class_id": 4,
+        "class_name": "Fusarium Wilt",
+        "precision": 0.33384753046750576,
+        "recall": 0.1319796954314721,
+        "f1": 0.18917355166014216,
+        "ap50": 0.16224000867136845,
+        "ap50_95": 0.058274131023258215
+      },
+      {
+        "class_id": 5,
+        "class_name": "Grey milddew",
+        "precision": 0.8860985616326906,
+        "recall": 0.9555555555555556,
+        "f1": 0.9195172920207542,
+        "ap50": 0.9596739246023401,
+        "ap50_95": 0.5541124106438318
+      },
+      {
+        "class_id": 6,
+        "class_name": "Healthy",
+        "precision": 0.6585893596306179,
+        "recall": 0.5491385957527637,
+        "f1": 0.5989044710163473,
+        "ap50": 0.6039856266011009,
+        "ap50_95": 0.31769925221851847
+      },
+      {
+        "class_id": 7,
+        "class_name": "Leaf Curl",
+        "precision": 0.762618772781332,
+        "recall": 0.5841341216911294,
+        "f1": 0.6615491956277351,
+        "ap50": 0.6518212159300053,
+        "ap50_95": 0.40726057474418875
+      }
+    ],
+    "speed_ms_per_image": {
+      "preprocess": 0.6157715446374719,
+      "inference": 2.74168044701004,
+      "loss": 0.000817187987203594,
+      "postprocess": 0.9244972792473377
+    },
+    "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy",
+    "data_split": {
+      "schema_version": 2,
+      "seed": 42,
+      "target_fractions": [
+        0.7,
+        0.2,
+        0.1
+      ],
+      "names_as_provided": [
+        "leaf spot",
+        "Aphids",
+        "Armyworm",
+        "Bacterial Blight",
+        "Fusarium Wilt",
+        "Grey milddew",
+        "Healthy",
+        "Leaf Curl"
+      ],
+      "original_images": 6097,
+      "unique_sha256_images": 5430,
+      "visual_candidate_groups": 2828,
+      "multi_image_groups": 494,
+      "largest_group": 43,
+      "candidate_pairs": 10577,
+      "pairs_crossing_previous_splits": 4793,
+      "phash_distance": 6,
+      "transforms": "four 90-degree rotations and reflection",
+      "split_manifest_sha256": "7308fc4d4c7290e82fe334bc715bd7408899baaad16c3af8a9e2ab518a1b2d04",
+      "cross_split_candidate_groups": 0,
+      "splits": {
+        "train": {
+          "images": 3801,
+          "boxes": 6400,
+          "groups": 1980,
+          "class_box_counts": {
+            "0": 1092,
+            "1": 582,
+            "2": 571,
+            "3": 865,
+            "4": 628,
+            "5": 176,
+            "6": 2211,
+            "7": 275
+          },
+          "class_image_counts": {
+            "0": 574,
+            "1": 544,
+            "2": 483,
+            "3": 775,
+            "4": 342,
+            "5": 158,
+            "6": 866,
+            "7": 207
+          }
+        },
+        "valid": {
+          "images": 1085,
+          "boxes": 1939,
+          "groups": 562,
+          "class_box_counts": {
+            "0": 311,
+            "1": 177,
+            "2": 154,
+            "3": 271,
+            "4": 197,
+            "5": 45,
+            "6": 685,
+            "7": 99
+          },
+          "class_image_counts": {
+            "0": 164,
+            "1": 156,
+            "2": 138,
+            "3": 221,
+            "4": 97,
+            "5": 45,
+            "6": 247,
+            "7": 59
+          }
+        },
+        "test": {
+          "images": 544,
+          "boxes": 842,
+          "groups": 286,
+          "class_box_counts": {
+            "0": 144,
+            "1": 86,
+            "2": 77,
+            "3": 114,
+            "4": 88,
+            "5": 23,
+            "6": 274,
+            "7": 36
+          },
+          "class_image_counts": {
+            "0": 82,
+            "1": 78,
+            "2": 69,
+            "3": 110,
+            "4": 48,
+            "5": 22,
+            "6": 123,
+            "7": 29
+          }
+        }
+      },
+      "policy": "One copy per SHA-256; union DCT pHash candidates; assign whole connected components to new seeded, class-balanced train/valid/test splits.",
+      "limitation": "Perceptual candidates are conservatively co-located, not deleted. pHash can miss crops, perspective changes and same-plant photos. This is not proof of plant/session independence or field generalization. The original split is replaced; restart models from pretrained weights."
+    }
+  },
+  "stress_validation": {
+    "dark": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/dark/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.7298921010372185,
+        "metrics/recall(B)": 0.6016291751619757,
+        "metrics/mAP50(B)": 0.6576523873129232,
+        "metrics/mAP50-95(B)": 0.3536865658332277,
+        "fitness": 0.3536865658332277
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.6214574886678966,
+          "recall": 0.49093257414563257,
+          "f1": 0.5485373068906205,
+          "ap50": 0.5555424203903427,
+          "ap50_95": 0.2640934305522295
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.8959987184525638,
+          "recall": 0.8192090395480226,
+          "f1": 0.8558849458976536,
+          "ap50": 0.8725649709564209,
+          "ap50_95": 0.43072274183223647
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.9185262441361715,
+          "recall": 0.8701298701298701,
+          "f1": 0.8936733172424748,
+          "ap50": 0.8990603666669472,
+          "ap50_95": 0.5031905223654183
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.7134376478924465,
+          "recall": 0.5535055350553506,
+          "f1": 0.6233771053671796,
+          "ap50": 0.6087345513341658,
+          "ap50_95": 0.32950227350256817
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.3270671954430696,
+          "recall": 0.10152284263959391,
+          "f1": 0.15494896504867314,
+          "ap50": 0.1511729080086705,
+          "ap50_95": 0.05194461619905931
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.9176130634345244,
+          "recall": 0.9111111111111111,
+          "f1": 0.9143505285630341,
+          "ap50": 0.9362552748631181,
+          "ap50_95": 0.5481332494939996
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.6750675261154987,
+          "recall": 0.5211678832116788,
+          "f1": 0.5882178555614606,
+          "ap50": 0.6013815441030242,
+          "ap50_95": 0.31311897205217226
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.7699689241555763,
+          "recall": 0.5454545454545454,
+          "f1": 0.6385518568615534,
+          "ap50": 0.6365070621806961,
+          "ap50_95": 0.3887867206681383
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5301233381837658,
+        "inference": 3.0279047814952125,
+        "loss": 0.0006588119562835463,
+        "postprocess": 1.0281387640754498
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    },
+    "bright": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/bright/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.6795621767876281,
+        "metrics/recall(B)": 0.5701130377304571,
+        "metrics/mAP50(B)": 0.6179847095053026,
+        "metrics/mAP50-95(B)": 0.33057003344558256,
+        "fitness": 0.33057003344558256
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.5801258996778839,
+          "recall": 0.43729903536977494,
+          "f1": 0.49868739714007115,
+          "ap50": 0.4745812710910934,
+          "ap50_95": 0.23203496730702025
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.9054530451591908,
+          "recall": 0.7740112994350282,
+          "f1": 0.8345885881017601,
+          "ap50": 0.8460409538847946,
+          "ap50_95": 0.4044125055779674
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.8513934571292462,
+          "recall": 0.8831168831168831,
+          "f1": 0.8669650664168365,
+          "ap50": 0.8896259730302123,
+          "ap50_95": 0.49157423197617467
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.6860688167004529,
+          "recall": 0.44649446494464945,
+          "f1": 0.5409427167423695,
+          "ap50": 0.508366553810717,
+          "ap50_95": 0.27428681601745836
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.30558147410134034,
+          "recall": 0.07106598984771574,
+          "f1": 0.11531446253982021,
+          "ap50": 0.10971143439316107,
+          "ap50_95": 0.04004874332379717
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.7013030286447897,
+          "recall": 0.9914079666617448,
+          "f1": 0.8214957090374969,
+          "ap50": 0.979574069731082,
+          "ap50_95": 0.5419256467047013
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.6846624222480294,
+          "recall": 0.4120541170133149,
+          "f1": 0.5144774602225294,
+          "ap50": 0.5176506542258832,
+          "ap50_95": 0.2691010598905029
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.7219092706400919,
+          "recall": 0.5454545454545454,
+          "f1": 0.6213980359480455,
+          "ap50": 0.6183267658754774,
+          "ap50_95": 0.39117629676703813
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5062897346295794,
+        "inference": 2.825957901407278,
+        "loss": 0.0007365225768145947,
+        "postprocess": 0.8855281419159355
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    },
+    "low_contrast": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/low_contrast/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.736232737756291,
+        "metrics/recall(B)": 0.5984533584035763,
+        "metrics/mAP50(B)": 0.6491478481160436,
+        "metrics/mAP50-95(B)": 0.3506727095018613,
+        "fitness": 0.3506727095018613
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.6451158650145021,
+          "recall": 0.4919614147909968,
+          "f1": 0.5582243516657721,
+          "ap50": 0.5487711388499452,
+          "ap50_95": 0.26315683554564545
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.9348689070193824,
+          "recall": 0.8109498232715754,
+          "f1": 0.8685114459771078,
+          "ap50": 0.8791566590502277,
+          "ap50_95": 0.4346723569233588
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.9382832625450831,
+          "recall": 0.8766233766233766,
+          "f1": 0.9064058988933178,
+          "ap50": 0.9039577728078765,
+          "ap50_95": 0.4854735505141206
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.7141515873510891,
+          "recall": 0.5092250922509225,
+          "f1": 0.5945248328067003,
+          "ap50": 0.5968007046763129,
+          "ap50_95": 0.3287237014219546
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.35577638112949783,
+          "recall": 0.116751269035533,
+          "f1": 0.17580915730637708,
+          "ap50": 0.1435796679059637,
+          "ap50_95": 0.0520339657048338
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.8668102785096469,
+          "recall": 0.9333333333333333,
+          "f1": 0.8988426493158834,
+          "ap50": 0.9424303749860502,
+          "ap50_95": 0.544493045999637
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.5843740023080259,
+          "recall": 0.5890876195246252,
+          "f1": 0.5867213439738831,
+          "ap50": 0.591946856598018,
+          "ap50_95": 0.3072256788115372
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.8504816181730999,
+          "recall": 0.45969493839824715,
+          "f1": 0.5968082593357477,
+          "ap50": 0.5865396100539552,
+          "ap50_95": 0.3896025410938037
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5216078284869297,
+        "inference": 2.8826758968010804,
+        "loss": 0.0007903299531534588,
+        "postprocess": 0.9841014388471214
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    },
+    "occlusion": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/occlusion/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.6325170661772346,
+        "metrics/recall(B)": 0.4929607373127939,
+        "metrics/mAP50(B)": 0.5246790402045102,
+        "metrics/mAP50-95(B)": 0.21520274799894437,
+        "fitness": 0.21520274799894437
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.6185967781305682,
+          "recall": 0.42443729903536975,
+          "f1": 0.5034457674002724,
+          "ap50": 0.44964382926877944,
+          "ap50_95": 0.18342512886333456
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.6809411806241414,
+          "recall": 0.6270026961713472,
+          "f1": 0.6528597499634087,
+          "ap50": 0.6749094055082433,
+          "ap50_95": 0.2415334858605925
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.8236407302399009,
+          "recall": 0.7792207792207793,
+          "f1": 0.8008152517574085,
+          "ap50": 0.7832119808844179,
+          "ap50_95": 0.3564615012849246
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.6441196181007605,
+          "recall": 0.3948339483394834,
+          "f1": 0.48957008326949286,
+          "ap50": 0.471416073715466,
+          "ap50_95": 0.1734051835741593
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.36503358105561867,
+          "recall": 0.12690355329949238,
+          "f1": 0.18833324534576265,
+          "ap50": 0.12550561694119458,
+          "ap50_95": 0.049651446350751846
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.5754492134144947,
+          "recall": 0.5777777777777777,
+          "f1": 0.5766111447094351,
+          "ap50": 0.6119397825328392,
+          "ap50_95": 0.23515174591752158
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.6075979309660089,
+          "recall": 0.4882573194055759,
+          "f1": 0.5414294213569614,
+          "ap50": 0.513881899076547,
+          "ap50_95": 0.22739417427795133
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.7447574968863836,
+          "recall": 0.5252525252525253,
+          "f1": 0.6160356991222803,
+          "ap50": 0.566923733708594,
+          "ap50_95": 0.2545993178623194
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5225568203054892,
+        "inference": 3.0356715843569666,
+        "loss": 0.0008175916184375088,
+        "postprocess": 0.9031342406336579
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    },
+    "blur": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/blur/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.6888298228887714,
+        "metrics/recall(B)": 0.5607030282630708,
+        "metrics/mAP50(B)": 0.5971501441787765,
+        "metrics/mAP50-95(B)": 0.3219774081398466,
+        "fitness": 0.3219774081398466
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.6583483939523916,
+          "recall": 0.36012861736334406,
+          "f1": 0.46557770911522944,
+          "ap50": 0.42386624955717495,
+          "ap50_95": 0.21239371180717934
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.8240605097693103,
+          "recall": 0.8022598870056498,
+          "f1": 0.8130140810683385,
+          "ap50": 0.8324091425389066,
+          "ap50_95": 0.3971933509859351
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.9163836515001754,
+          "recall": 0.8539892595733839,
+          "f1": 0.8840869526807533,
+          "ap50": 0.9019755862939849,
+          "ap50_95": 0.49659560203650177
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.6729334768564301,
+          "recall": 0.57700971183488,
+          "f1": 0.6212908795823132,
+          "ap50": 0.5931785486262702,
+          "ap50_95": 0.307797531843227
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.24860034795275868,
+          "recall": 0.05712193494508966,
+          "f1": 0.09289825241707347,
+          "ap50": 0.06098614892822308,
+          "ap50_95": 0.020949532031379465
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.710816189410279,
+          "recall": 0.9555555555555556,
+          "f1": 0.8152134850123113,
+          "ap50": 0.9544830207532747,
+          "ap50_95": 0.5375550190319032
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.7128754592717795,
+          "recall": 0.4481751824817518,
+          "f1": 0.5503516858891925,
+          "ap50": 0.5272804629060739,
+          "ap50_95": 0.2729875957005922
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.7666205543970461,
+          "recall": 0.4313840773449122,
+          "f1": 0.5520978663519006,
+          "ap50": 0.48302199382630373,
+          "ap50_95": 0.3303469216820549
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5224784793657323,
+        "inference": 2.909748674631076,
+        "loss": 0.0007664812149368399,
+        "postprocess": 0.8995845814907177
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    },
+    "scale_050": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/stress/suite-val/scale_050/data.yaml",
+      "split": "val",
+      "imgsz": 640,
+      "batch": 8,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "metrics": {
+        "metrics/precision(B)": 0.7060248488293113,
+        "metrics/recall(B)": 0.6076970827719705,
+        "metrics/mAP50(B)": 0.6468534354436444,
+        "metrics/mAP50-95(B)": 0.34810446270284934,
+        "fitness": 0.34810446270284934
+      },
+      "per_class": [
+        {
+          "class_id": 0,
+          "class_name": "leaf spot",
+          "precision": 0.6405256330073259,
+          "recall": 0.4437299035369775,
+          "f1": 0.5242682518424728,
+          "ap50": 0.5319493977262882,
+          "ap50_95": 0.2623895964638877
+        },
+        {
+          "class_id": 1,
+          "class_name": "Aphids",
+          "precision": 0.8024822368153389,
+          "recall": 0.8033906946092116,
+          "f1": 0.8029362087506107,
+          "ap50": 0.8001513646210557,
+          "ap50_95": 0.3881978665376534
+        },
+        {
+          "class_id": 2,
+          "class_name": "Armyworm",
+          "precision": 0.9341250187727427,
+          "recall": 0.8701298701298701,
+          "f1": 0.9009925219204011,
+          "ap50": 0.9054294075441696,
+          "ap50_95": 0.4949090797961186
+        },
+        {
+          "class_id": 3,
+          "class_name": "Bacterial Blight",
+          "precision": 0.662476586998864,
+          "recall": 0.5794121017646644,
+          "f1": 0.6181664349082139,
+          "ap50": 0.6098318282399378,
+          "ap50_95": 0.3240698971778662
+        },
+        {
+          "class_id": 4,
+          "class_name": "Fusarium Wilt",
+          "precision": 0.3186198980042422,
+          "recall": 0.13767822986268252,
+          "f1": 0.19227351977672777,
+          "ap50": 0.13074762304682558,
+          "ap50_95": 0.049324329286321175
+        },
+        {
+          "class_id": 5,
+          "class_name": "Grey milddew",
+          "precision": 0.8965383552026717,
+          "recall": 0.9777777777777777,
+          "f1": 0.9353974660066121,
+          "ap50": 0.9749914529914531,
+          "ap50_95": 0.5436420695296327
+        },
+        {
+          "class_id": 6,
+          "class_name": "Healthy",
+          "precision": 0.6344755421786693,
+          "recall": 0.5343065693430656,
+          "f1": 0.5800986290459017,
+          "ap50": 0.5931892723532481,
+          "ap50_95": 0.31069393225978975
+        },
+        {
+          "class_id": 7,
+          "class_name": "Leaf Curl",
+          "precision": 0.7589555196546359,
+          "recall": 0.5151515151515151,
+          "f1": 0.6137272225989653,
+          "ap50": 0.6285371370261769,
+          "ap50_95": 0.4116089305715249
+        }
+      ],
+      "speed_ms_per_image": {
+        "preprocess": 0.5960496369838363,
+        "inference": 2.971870058123881,
+        "loss": 0.0007966673055294609,
+        "postprocess": 0.9687884295362472
+      },
+      "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy"
+    }
+  },
+  "benchmark": {
+    "gpu": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "manifest": "/home/ykkkyi/yky/falcons/cotton-doctor/data/splits/grouped-v2/valid.txt",
+      "images": 100,
+      "imgsz": 640,
+      "device": "0",
+      "warmup": 10,
+      "model_file_mib": 5.262,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "parameters": 2606584,
+      "latency_ms_median": 8.253,
+      "latency_ms_p95": 10.089,
+      "throughput_fps": 119.722,
+      "batch": 1,
+      "precision": "FP32",
+      "confidence": 0.25,
+      "nms_iou": 0.45,
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+      "hardware": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "timing_boundary": "cv2 decode + Ultralytics preprocess + model + NMS; includes one image call"
+    },
+    "cpu": {
+      "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E2_robust_yolo11n_seed42/weights/best.pt",
+      "manifest": "/home/ykkkyi/yky/falcons/cotton-doctor/data/splits/grouped-v2/valid.txt",
+      "images": 100,
+      "imgsz": 640,
+      "device": "cpu",
+      "warmup": 10,
+      "model_file_mib": 5.262,
+      "weight_sha256": "1facddae12d4701d343f82615d64e674f0e654c2d32e49be9c82396c71aa2119",
+      "parameters": 2606584,
+      "latency_ms_median": 27.123,
+      "latency_ms_p95": 30.642,
+      "throughput_fps": 36.826,
+      "batch": 1,
+      "precision": "FP32",
+      "confidence": 0.25,
+      "nms_iou": 0.45,
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+      "hardware": "Intel(R) Core(TM) Ultra 9 275HX",
+      "timing_boundary": "cv2 decode + Ultralytics preprocess + model + NMS; includes one image call"
+    }
+  },
+  "baseline_reference": {
+    "model": "yolo11n",
+    "run": "E1_grouped_yolo11n_seed42",
+    "epochs_completed": 120,
+    "weight_sha256": "c228f71c11bebaf35608062c4810a87b85f4ecc160b4e8402f4261facd287eb4",
+    "metrics": {
+      "metrics/precision(B)": 0.7636297499398255,
+      "metrics/recall(B)": 0.609913157103454,
+      "metrics/mAP50(B)": 0.6754631099921706,
+      "metrics/mAP50-95(B)": 0.35953517179144895,
+      "fitness": 0.35953517179144895
+    },
+    "per_class": [
+      {
+        "class_id": 0,
+        "class_name": "leaf spot",
+        "precision": 0.6821962556743818,
+        "recall": 0.48231511254019294,
+        "f1": 0.5651015057664245,
+        "ap50": 0.5653633072928989,
+        "ap50_95": 0.2588083540327692
+      },
+      {
+        "class_id": 1,
+        "class_name": "Aphids",
+        "precision": 0.8662657319431218,
+        "recall": 0.8051234479663267,
+        "f1": 0.8345762451267106,
+        "ap50": 0.8624947511198344,
+        "ap50_95": 0.4120700582595133
+      },
+      {
+        "class_id": 2,
+        "class_name": "Armyworm",
+        "precision": 0.968769314358057,
+        "recall": 0.8766233766233766,
+        "f1": 0.9203957853220059,
+        "ap50": 0.9272500749570353,
+        "ap50_95": 0.5184938811493514
+      },
+      {
+        "class_id": 3,
+        "class_name": "Bacterial Blight",
+        "precision": 0.7299479388712943,
+        "recall": 0.5645756457564576,
+        "f1": 0.6366988347691807,
+        "ap50": 0.608183042609272,
+        "ap50_95": 0.33531189439291215
+      },
+      {
+        "class_id": 4,
+        "class_name": "Fusarium Wilt",
+        "precision": 0.5388176777302458,
+        "recall": 0.17792349195647286,
+        "f1": 0.267511695446617,
+        "ap50": 0.2174653299315269,
+        "ap50_95": 0.0719284904647943
+      },
+      {
+        "class_id": 5,
+        "class_name": "Grey milddew",
+        "precision": 0.7992337249252268,
+        "recall": 0.9555555555555556,
+        "f1": 0.8704318342204793,
+        "ap50": 0.9642070364153461,
+        "ap50_95": 0.5599980244534272
+      },
+      {
+        "class_id": 6,
+        "class_name": "Healthy",
+        "precision": 0.683256428559361,
+        "recall": 0.4846715328467153,
+        "f1": 0.5670811068836096,
+        "ap50": 0.59847300915386,
+        "ap50_95": 0.31138249247002187
+      },
+      {
+        "class_id": 7,
+        "class_name": "Leaf Curl",
+        "precision": 0.8405509274569147,
+        "recall": 0.5325170935825341,
+        "f1": 0.6519818829639755,
+        "ap50": 0.6602683284575909,
+        "ap50_95": 0.40828817910880294
+      }
+    ],
+    "environment": {
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189"
+    },
+    "stress_validation": {
+      "dark": {
+        "metrics/precision(B)": 0.7526367001792588,
+        "metrics/recall(B)": 0.6035295998902079,
+        "metrics/mAP50(B)": 0.653280284002075,
+        "metrics/mAP50-95(B)": 0.348495419184286,
+        "fitness": 0.348495419184286
+      },
+      "bright": {
+        "metrics/precision(B)": 0.6740570850328977,
+        "metrics/recall(B)": 0.5910116667351314,
+        "metrics/mAP50(B)": 0.6209396360888584,
+        "metrics/mAP50-95(B)": 0.3301463736431367,
+        "fitness": 0.3301463736431367
+      },
+      "low_contrast": {
+        "metrics/precision(B)": 0.6892433706649601,
+        "metrics/recall(B)": 0.5970687011395611,
+        "metrics/mAP50(B)": 0.631497421824265,
+        "metrics/mAP50-95(B)": 0.3388520471655842,
+        "fitness": 0.3388520471655842
+      },
+      "occlusion": {
+        "metrics/precision(B)": 0.62663183274198,
+        "metrics/recall(B)": 0.5031408264951263,
+        "metrics/mAP50(B)": 0.5267617058290346,
+        "metrics/mAP50-95(B)": 0.21245558469584971,
+        "fitness": 0.21245558469584971
+      },
+      "blur": {
+        "metrics/precision(B)": 0.749030507430567,
+        "metrics/recall(B)": 0.5532227966424738,
+        "metrics/mAP50(B)": 0.6039852242478334,
+        "metrics/mAP50-95(B)": 0.32256966566879924,
+        "fitness": 0.32256966566879924
+      },
+      "scale_050": {
+        "metrics/precision(B)": 0.7342641575904073,
+        "metrics/recall(B)": 0.6122758045424769,
+        "metrics/mAP50(B)": 0.659542591477342,
+        "metrics/mAP50-95(B)": 0.3563470020306683,
+        "fitness": 0.3563470020306683
+      }
+    },
+    "benchmark_gpu": {
+      "images": 100,
+      "imgsz": 640,
+      "device": "0",
+      "warmup": 10,
+      "model_file_mib": 5.263,
+      "weight_sha256": "c228f71c11bebaf35608062c4810a87b85f4ecc160b4e8402f4261facd287eb4",
+      "parameters": 2606584,
+      "latency_ms_median": 8.272,
+      "latency_ms_p95": 10.27,
+      "throughput_fps": 117.666,
+      "batch": 1,
+      "precision": "FP32",
+      "confidence": 0.25,
+      "nms_iou": 0.45,
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+      "hardware": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "timing_boundary": "cv2 decode + Ultralytics preprocess + model + NMS; includes one image call"
+    },
+    "benchmark_cpu": {
+      "images": 100,
+      "imgsz": 640,
+      "device": "cpu",
+      "warmup": 10,
+      "model_file_mib": 5.263,
+      "weight_sha256": "c228f71c11bebaf35608062c4810a87b85f4ecc160b4e8402f4261facd287eb4",
+      "parameters": 2606584,
+      "latency_ms_median": 31.831,
+      "latency_ms_p95": 35.909,
+      "throughput_fps": 32.111,
+      "batch": 1,
+      "precision": "FP32",
+      "confidence": 0.25,
+      "nms_iou": 0.45,
+      "python": "3.14.4",
+      "torch": "2.14.0+cu130",
+      "ultralytics": "8.4.189",
+      "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+      "hardware": "Intel(R) Core(TM) Ultra 9 275HX",
+      "timing_boundary": "cv2 decode + Ultralytics preprocess + model + NMS; includes one image call"
+    }
+  },
+  "final_test_evaluated": false
+}

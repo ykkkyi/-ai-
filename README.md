@@ -84,6 +84,16 @@ cotton-doctor train --data data/splits/grouped-v2/data.yaml --model yolo11n.pt \
 The `robust` run is an ablation candidate, not the selected model until its validation,
 stress and deployment measurements are compared with `yolo11n` under the same protocol.
 
+After the run finishes, generate its comparable report without using the final test set:
+
+```bash
+./.venv/bin/python scripts/run_robust_ablation.py --device 0 --limit 100
+```
+
+The report records clean validation, all six synthetic stress subsets, CPU/GPU timing and
+the delta against the frozen YOLO11n baseline. A negative result is retained as evidence;
+an augmentation is not adopted solely because it improves one stress subset.
+
 After reviewing validation metrics and errors:
 
 ```bash
