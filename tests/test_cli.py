@@ -7,11 +7,9 @@ def test_training_profiles_keep_baseline_and_change_only_robust_knobs():
     baseline = _training_hyperparameters("baseline")
     robust = _training_hyperparameters("robust")
 
-    assert baseline["erasing"] == 0.0
-    assert robust["erasing"] == 0.25
     assert robust["hsv_s"] > baseline["hsv_s"]
     assert robust["hsv_v"] > baseline["hsv_v"]
-    assert {key for key in baseline if baseline[key] != robust[key]} == {"hsv_s", "hsv_v", "erasing"}
+    assert {key for key in baseline if baseline[key] != robust[key]} == {"hsv_s", "hsv_v"}
 
 
 def test_train_parser_exposes_profile():

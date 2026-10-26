@@ -72,8 +72,7 @@ cotton-doctor train --data configs/data.local.yaml --model yolov8n.pt --epochs 1
 
 The training entry point also has a controlled `robust` augmentation profile for the
 illumination/occlusion ablation. It keeps the baseline optimizer, image size, seed and
-geometry settings fixed, while increasing HSV brightness/saturation jitter and enabling
-limited random erasing:
+geometry settings fixed, while increasing HSV brightness/saturation jitter:
 
 ```bash
 cotton-doctor train --data data/splits/grouped-v2/data.yaml --model yolo11n.pt \

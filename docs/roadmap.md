@@ -16,10 +16,10 @@ The project advances one reproducible milestone at a time. No accuracy, latency,
 Label real illumination, occlusion, and scale conditions on a field holdout. First compare ordinary augmentation, agricultural lighting augmentation, lighting-paired consistency, and limited occlusion augmentation one change at a time. Keep generated stress images separate from the real-field results. Measure both missed detections and false positives.
 
 The first controlled ablation is implemented in the CLI as `--profile robust`. It changes
-only HSV saturation/value jitter and enables limited random erasing relative to the frozen
-baseline profile; model, data split, optimizer, seed, input size and training budget remain
-fixed. The run is recorded separately as `E2_robust_yolo11n_seed42` and must be judged by
-both clean validation and the six synthetic stress subsets before being adopted.
+only HSV saturation/value jitter relative to the frozen baseline profile; model, data split,
+optimizer, seed, input size and training budget remain fixed. The run is recorded separately
+as `E2_robust_yolo11n_seed42` and must be judged by both clean validation and the six
+synthetic stress subsets before being adopted.
 
 The next controlled ablation uses `balance-train` to repeat only images containing the rare
 Fusarium Wilt class. It keeps the validation/test manifests unchanged and reports the cost

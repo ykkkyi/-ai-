@@ -4,7 +4,7 @@
   "profile": {
     "hsv_s": 0.45,
     "hsv_v": 0.5,
-    "erasing": 0.25
+    "effective_transforms": ["RandomHSV"]
   },
   "data": {
     "schema_version": 2,

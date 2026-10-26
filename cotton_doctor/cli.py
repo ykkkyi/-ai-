@@ -47,7 +47,7 @@ def build_parser() -> argparse.ArgumentParser:
     train.add_argument("--workers", type=int, default=4)
     train.add_argument("--seed", type=int, default=42)
     train.add_argument("--profile", choices=("baseline", "robust"), default="baseline",
-                       help="Training augmentation profile; robust targets illumination and occlusion")
+                       help="Training augmentation profile; robust targets illumination")
     train.add_argument("--name", default="E0_yolov8n_seed42")
     train.add_argument("--project", type=Path, default=Path("runs"))
     train.add_argument("--resume", type=Path, help="Resume this last.pt checkpoint with its saved settings")
@@ -111,13 +111,13 @@ def _training_hyperparameters(profile: str) -> dict[str, float | int | bool]:
         return {
             "degrees": 5.0, "translate": 0.1, "scale": 0.3, "fliplr": 0.5, "flipud": 0.0,
             "hsv_h": 0.01, "hsv_s": 0.25, "hsv_v": 0.25, "mosaic": 0.5,
-            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0, "erasing": 0.0,
+            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0,
         }
     if profile == "robust":
         return {
             "degrees": 5.0, "translate": 0.1, "scale": 0.3, "fliplr": 0.5, "flipud": 0.0,
             "hsv_h": 0.01, "hsv_s": 0.45, "hsv_v": 0.50, "mosaic": 0.5,
-            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0, "erasing": 0.25,
+            "close_mosaic": 10, "mixup": 0.0, "copy_paste": 0.0,
         }
     raise ValueError(f"Unknown training profile: {profile}")
 
