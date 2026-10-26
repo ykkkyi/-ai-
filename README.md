@@ -111,6 +111,21 @@ on overall mAP, Fusarium Wilt AP/recall, every other class, stress subsets and l
 The first completed run is summarized in [`reports/balanced-fusarium-ablation.md`](reports/balanced-fusarium-ablation.md);
 its training log stopped after 114 completed epochs and is reported as such.
 
+For a targeted occlusion ablation, create derived training copies near the largest labeled
+box. The original images and all evaluation manifests remain unchanged:
+
+```bash
+cotton-doctor occlusion-train --data data/splits/grouped-v2/data.yaml \
+  --output data/splits/grouped-v2-occlusion --fraction 0.25 --rectangle-fraction 0.18
+cotton-doctor train --data data/splits/grouped-v2-occlusion/data.yaml \
+  --model yolo11n.pt --epochs 120 --imgsz 640 --batch 8 --device 0 --seed 42 \
+  --profile baseline --name E4_occlusion_yolo11n_seed42
+```
+
+The derived copies keep the original boxes as a deliberately controlled partial-occlusion
+training signal. Report clean validation, synthetic occlusion mAP/recall and deployment
+latency before treating this as an improvement.
+
 After reviewing validation metrics and errors:
 
 ```bash

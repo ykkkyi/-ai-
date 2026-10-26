@@ -25,6 +25,11 @@ The next controlled ablation uses `balance-train` to repeat only images containi
 Fusarium Wilt class. It keeps the validation/test manifests unchanged and reports the cost
 of the larger training epoch separately from deployment latency.
 
+The following occlusion ablation uses `occlusion-train` to add target-aware derived copies
+to the training manifest. It is deliberately separate from the synthetic validation stress
+set: the train copies teach partial visibility while validation still tests the unchanged
+original boxes.
+
 ## Milestone 3: lightweight model and distillation
 
 Retain the high-resolution P3 path initially. Test selected P4/P5 depthwise-pointwise replacements only if device measurements support them. Compare no distillation, ordinary teacher-student distillation, and foreground/class-balanced distillation. The deployment graph must exclude the teacher and training-only adapters.

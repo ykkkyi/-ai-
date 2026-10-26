@@ -37,6 +37,13 @@ def build_parser() -> argparse.ArgumentParser:
     balanced.add_argument("--factor", type=float, default=2.0)
     balanced.add_argument("--seed", type=int, default=42)
 
+    occlusion = subparsers.add_parser("occlusion-train", help="Create target-aware occluded training copies")
+    occlusion.add_argument("--data", type=Path, default=Path("data/splits/grouped-v2/data.yaml"))
+    occlusion.add_argument("--output", type=Path, default=Path("data/splits/grouped-v2-occlusion"))
+    occlusion.add_argument("--fraction", type=float, default=0.25)
+    occlusion.add_argument("--rectangle-fraction", type=float, default=0.18)
+    occlusion.add_argument("--seed", type=int, default=42)
+
     train = subparsers.add_parser("train", help="Train a YOLO detection model")
     train.add_argument("--data", type=Path, default=Path("configs/data.local.yaml"))
     train.add_argument("--model", default="yolov8n.pt")
@@ -202,6 +209,13 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(make_balanced_train(args.data, args.output, target_class=args.target_class,
                                               factor=args.factor, seed=args.seed),
                          ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "occlusion-train":
+        from .occlusion import make_occlusion_train
+
+        print(json.dumps(make_occlusion_train(args.data, args.output, fraction=args.fraction,
+                                               rectangle_fraction=args.rectangle_fraction,
+                                               seed=args.seed), ensure_ascii=False, indent=2))
         return 0
     if args.command in {"audit", "prepare", "prepare-grouped"}:
         audit = audit_dataset(args.dataset)
