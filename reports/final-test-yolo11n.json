@@ -1,0 +1,208 @@
+{
+  "model": "/home/ykkkyi/yky/falcons/cotton-doctor/runs/E1_grouped_yolo11n_seed42/weights/best.pt",
+  "data": "/home/ykkkyi/yky/falcons/cotton-doctor/data/splits/grouped-v2/data.yaml",
+  "split": "test",
+  "imgsz": 640,
+  "batch": 8,
+  "weight_sha256": "c228f71c11bebaf35608062c4810a87b85f4ecc160b4e8402f4261facd287eb4",
+  "python": "3.14.4",
+  "torch": "2.14.0+cu130",
+  "ultralytics": "8.4.189",
+  "metrics": {
+    "metrics/precision(B)": 0.7946636672749909,
+    "metrics/recall(B)": 0.6467646312463299,
+    "metrics/mAP50(B)": 0.6968891313085896,
+    "metrics/mAP50-95(B)": 0.3906748358334618,
+    "fitness": 0.3906748358334618
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class_name": "leaf spot",
+      "precision": 0.5565507725961867,
+      "recall": 0.4513888888888889,
+      "f1": 0.4984838764699512,
+      "ap50": 0.4892343790222191,
+      "ap50_95": 0.2243384225367318
+    },
+    {
+      "class_id": 1,
+      "class_name": "Aphids",
+      "precision": 0.8515720260734138,
+      "recall": 0.8672946615546118,
+      "f1": 0.8593614356002305,
+      "ap50": 0.8429985640557556,
+      "ap50_95": 0.43517187670107893
+    },
+    {
+      "class_id": 2,
+      "class_name": "Armyworm",
+      "precision": 0.882712194923146,
+      "recall": 0.8181818181818182,
+      "f1": 0.8492228945589383,
+      "ap50": 0.8630929133525009,
+      "ap50_95": 0.43070356618212
+    },
+    {
+      "class_id": 3,
+      "class_name": "Bacterial Blight",
+      "precision": 0.8835937599250944,
+      "recall": 0.6658512149582804,
+      "f1": 0.7594228747877454,
+      "ap50": 0.7587691650902268,
+      "ap50_95": 0.42109796848717646
+    },
+    {
+      "class_id": 4,
+      "class_name": "Fusarium Wilt",
+      "precision": 0.47148539357214314,
+      "recall": 0.18249218330230454,
+      "f1": 0.26313562394401596,
+      "ap50": 0.20439004188644244,
+      "ap50_95": 0.08193907320957236
+    },
+    {
+      "class_id": 5,
+      "class_name": "Grey milddew",
+      "precision": 0.9102293841465238,
+      "recall": 0.8695652173913043,
+      "f1": 0.8894327599571631,
+      "ap50": 0.8531429983060417,
+      "ap50_95": 0.46686800243362025
+    },
+    {
+      "class_id": 6,
+      "class_name": "Healthy",
+      "precision": 0.8088419360034002,
+      "recall": 0.5693430656934306,
+      "f1": 0.6682826281502181,
+      "ap50": 0.7749224887555312,
+      "ap50_95": 0.43759922253969546
+    },
+    {
+      "class_id": 7,
+      "class_name": "Leaf Curl",
+      "precision": 0.9923238709600202,
+      "recall": 0.75,
+      "f1": 0.8543106314785636,
+      "ap50": 0.7885625,
+      "ap50_95": 0.6276805545776987
+    }
+  ],
+  "speed_ms_per_image": {
+    "preprocess": 0.7266839229219734,
+    "inference": 3.166986130455531,
+    "loss": 0.0007843125465168509,
+    "postprocess": 0.9734628913119034
+  },
+  "precision_recall_policy": "Ultralytics max mean F1 validation curve point; not fixed-confidence precision or image classification accuracy",
+  "data_split": {
+    "schema_version": 2,
+    "seed": 42,
+    "target_fractions": [
+      0.7,
+      0.2,
+      0.1
+    ],
+    "names_as_provided": [
+      "leaf spot",
+      "Aphids",
+      "Armyworm",
+      "Bacterial Blight",
+      "Fusarium Wilt",
+      "Grey milddew",
+      "Healthy",
+      "Leaf Curl"
+    ],
+    "original_images": 6097,
+    "unique_sha256_images": 5430,
+    "visual_candidate_groups": 2828,
+    "multi_image_groups": 494,
+    "largest_group": 43,
+    "candidate_pairs": 10577,
+    "pairs_crossing_previous_splits": 4793,
+    "phash_distance": 6,
+    "transforms": "four 90-degree rotations and reflection",
+    "split_manifest_sha256": "7308fc4d4c7290e82fe334bc715bd7408899baaad16c3af8a9e2ab518a1b2d04",
+    "cross_split_candidate_groups": 0,
+    "splits": {
+      "train": {
+        "images": 3801,
+        "boxes": 6400,
+        "groups": 1980,
+        "class_box_counts": {
+          "0": 1092,
+          "1": 582,
+          "2": 571,
+          "3": 865,
+          "4": 628,
+          "5": 176,
+          "6": 2211,
+          "7": 275
+        },
+        "class_image_counts": {
+          "0": 574,
+          "1": 544,
+          "2": 483,
+          "3": 775,
+          "4": 342,
+          "5": 158,
+          "6": 866,
+          "7": 207
+        }
+      },
+      "valid": {
+        "images": 1085,
+        "boxes": 1939,
+        "groups": 562,
+        "class_box_counts": {
+          "0": 311,
+          "1": 177,
+          "2": 154,
+          "3": 271,
+          "4": 197,
+          "5": 45,
+          "6": 685,
+          "7": 99
+        },
+        "class_image_counts": {
+          "0": 164,
+          "1": 156,
+          "2": 138,
+          "3": 221,
+          "4": 97,
+          "5": 45,
+          "6": 247,
+          "7": 59
+        }
+      },
+      "test": {
+        "images": 544,
+        "boxes": 842,
+        "groups": 286,
+        "class_box_counts": {
+          "0": 144,
+          "1": 86,
+          "2": 77,
+          "3": 114,
+          "4": 88,
+          "5": 23,
+          "6": 274,
+          "7": 36
+        },
+        "class_image_counts": {
+          "0": 82,
+          "1": 78,
+          "2": 69,
+          "3": 110,
+          "4": 48,
+          "5": 22,
+          "6": 123,
+          "7": 29
+        }
+      }
+    },
+    "policy": "One copy per SHA-256; union DCT pHash candidates; assign whole connected components to new seeded, class-balanced train/valid/test splits.",
+    "limitation": "Perceptual candidates are conservatively co-located, not deleted. pHash can miss crops, perspective changes and same-plant photos. This is not proof of plant/session independence or field generalization. The original split is replaced; restart models from pretrained weights."
+  }
+}

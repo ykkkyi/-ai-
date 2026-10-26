@@ -2,16 +2,16 @@
 
 棉卫士是一个面向棉花病虫害巡检的可复现目标检测项目，目标是在普通RGB图片、视频和本地摄像头上检测棉花病害与虫害相关目标，并将模型部署为本地网页服务。
 
-仓库已实现数据审计、视觉近重复分组、训练/验证、困难条件压力集、速度测量、ONNX 一致性检查和本地图片/视频推理。当前正推进 YOLOv8n/YOLO11n 的分组数据基线；鲁棒训练、蒸馏和边缘设备实测按后续独立实验推进。
+仓库已实现数据审计、视觉近重复分组、训练/验证、困难条件压力集、速度测量、ONNX 一致性检查和本地图片/视频推理。YOLOv8n/YOLO11n 分组基线、HSV/类别平衡/遮挡消融和一次性冻结测试集评估已经完成；真实田间留出集、蒸馏和目标边缘设备实测仍按后续独立实验推进。
 
 **状态**
 
 - [x] 数据审计、SHA-256 去重、旋转/翻转 pHash 分组和可复算清单
 - [x] 图片上传网页、视频推理、JSON/CSV 导出和相机入口
 - [x] 合成困难集、端到端计时和 ONNX 原始输出一致性工具
-- [ ] 完成 YOLOv8n/YOLO11n 分组数据基线与比较报告
+- [x] 完成 YOLOv8n/YOLO11n 分组数据基线与比较报告
 - [ ] 完成真实田间光照、遮挡和尺度分组评价
-- [ ] 完成单因素消融与小模型优化
+- [x] 完成 HSV、Fusarium Wilt 类别平衡和目标感知遮挡单因素消融
 - [ ] 完成目标边缘设备的 ONNX/TensorRT 实测
 
 本仓库不包含原始棉花图片、标签、下载的数据压缩包、训练权重或推理缓存。公开数据集和预训练权重的许可应分别核对后再用于训练、分发。
@@ -109,7 +109,7 @@ This is an explicit class-balance ablation. Compare it against the frozen YOLO11
 on overall mAP, Fusarium Wilt AP/recall, every other class, stress subsets and latency.
 
 The first completed run is summarized in [`reports/balanced-fusarium-ablation.md`](reports/balanced-fusarium-ablation.md);
-its training log stopped after 114 completed epochs and is reported as such.
+its training log stopped after 114 completed epochs and is reported as such. The targeted occlusion result is in [`reports/occlusion-ablation.md`](reports/occlusion-ablation.md).
 
 For a targeted occlusion ablation, create derived training copies near the largest labeled
 box. The original images and all evaluation manifests remain unchanged:
@@ -123,8 +123,9 @@ cotton-doctor train --data data/splits/grouped-v2-occlusion/data.yaml \
 ```
 
 The derived copies keep the original boxes as a deliberately controlled partial-occlusion
-training signal. Report clean validation, synthetic occlusion mAP/recall and deployment
-latency before treating this as an improvement.
+training signal. The completed run improves synthetic occlusion mAP50 by 0.41 percentage
+points but lowers clean mAP50-95 and GPU throughput, so it remains an ablation rather than
+the default deployment model.
 
 After reviewing validation metrics and errors:
 
@@ -132,10 +133,10 @@ After reviewing validation metrics and errors:
 cotton-doctor evaluate runs/E0_grouped_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split val --imgsz 640 --batch 1
 ```
 
-Only after model, confidence threshold, and deployment configuration have been frozen, evaluate the held-out test set explicitly:
+Only after model, confidence threshold, and deployment configuration have been frozen, evaluate the held-out test set explicitly. The frozen YOLO11n result is recorded in [`reports/final-test-yolo11n.md`](reports/final-test-yolo11n.md):
 
 ```bash
-cotton-doctor evaluate runs/E0_grouped_yolov8n_seed42/weights/best.pt --data configs/data.local.yaml --split test --allow-test
+cotton-doctor evaluate runs/E1_grouped_yolo11n_seed42/weights/best.pt --data data/splits/grouped-v2/data.yaml --split test --allow-test
 ```
 
 Run both baselines, synthetic validation stress checks, CPU/GPU timing and ONNX checks sequentially:
