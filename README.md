@@ -109,6 +109,9 @@ cotton-doctor train --data data/splits/grouped-v2-balanced-fusarium/data.yaml \
 This is an explicit class-balance ablation. Compare it against the frozen YOLO11n baseline
 on overall mAP, Fusarium Wilt AP/recall, every other class, stress subsets and latency.
 
+The first completed run is summarized in [`reports/balanced-fusarium-ablation.md`](reports/balanced-fusarium-ablation.md);
+its training log stopped after 114 completed epochs and is reported as such.
+
 After reviewing validation metrics and errors:
 
 ```bash

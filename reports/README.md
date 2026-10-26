@@ -7,3 +7,8 @@ The baseline suite generates `baseline-comparison.json` and `.md` only after suc
 `robust-ablation.json` and `.md` contain the first controlled augmentation ablation. The
 profile improves recall and low-contrast stress slightly but does not improve overall mAP
 or occlusion robustness, so the frozen YOLO11n baseline remains the current candidate.
+
+`balanced-fusarium-ablation.json` and `.md` record the second ablation. Repeating rare-class
+training images raises Fusarium Wilt recall while leaving the deployment graph unchanged;
+it does not improve synthetic occlusion and must be selected only if the competition score
+weights rare-class recall enough to justify the small overall mAP tradeoff.
